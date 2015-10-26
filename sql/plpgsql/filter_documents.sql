@@ -1,3 +1,4 @@
+/*
 create function filter_documents(tbl varchar, criteria varchar)
 returns setof jsonb
 as $$
@@ -9,3 +10,4 @@ as $$
   }
   return out;
 $$ language plv8;
+*/

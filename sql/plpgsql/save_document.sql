@@ -110,6 +110,8 @@ ELSE -- id if
 
     RAISE NOTICE 'insert_document: v_returning.id: %', v_returning.id;
 
+    -- There is no native way to add fields to a json column. Pulled this method from
+    -- http://michael.otacoo.com/postgresql-2/manipulating-jsonb-data-with-key-unique/
     WITH json_union AS (
         SELECT * FROM jsonb_each(p_doc_string)
         UNION 

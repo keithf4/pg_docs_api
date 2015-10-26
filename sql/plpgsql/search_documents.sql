@@ -1,3 +1,4 @@
+/*
 create function search_documents(tbl varchar, query varchar)
 returns setof jsonb
 as $$
@@ -11,3 +12,4 @@ as $$
   }
   return out;
 $$ language plv8;
+*/

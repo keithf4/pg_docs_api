@@ -1,3 +1,4 @@
+/*
 create function update_search(tbl varchar, id int)
 returns boolean
 as $$
@@ -32,5 +33,7 @@ DECLARE
 BEGIN
 
     -- See if there's a json function to return all field names from a jsonb column
+    -- make this a trigger on the created table instead of a standalone funtion
 END
 $$;
+*/

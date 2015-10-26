@@ -1,0 +1,3 @@
+default_version = '0.1.0'
+comment = 'Extension to give a document storage api to postgres'
+relocatable = false

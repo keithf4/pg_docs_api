@@ -1,3 +1,4 @@
+/*
 create function find_document(tbl varchar, id int, out jsonb)
 as $$
   //find by the id of the row
@@ -13,3 +14,4 @@ as $$
   var results = plv8.execute("select body from " + tbl + " where body @> $1 order by body ->> '" + orderby + "' limit 1;",criteria);
   return results[0] ? results[0].body : null
 $$ language plv8;
+*/
