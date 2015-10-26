@@ -1,3 +1,0 @@
-/*
-create extension plv8;
-*/

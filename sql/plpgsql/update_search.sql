@@ -1,39 +1,25 @@
-/*
-create function update_search(tbl varchar, id int)
-returns boolean
-as $$
-  //get the record
-  var found = plv8.execute("select body from " + tbl + " where id=$1",id)[0];
-  if(found){
-    var doc = JSON.parse(found.body);
-    var searchFields = ["name","email","first","first_name","last","last_name","description","title","city","state","address","street"];
-    var searchVals = [];
-    for(var key in doc){
-      if(searchFields.indexOf(key) > -1){
-        searchVals.push(doc[key]);
-      }
-    };
-
-    if(searchVals.length > 0){
-      var updateSql = "update " + tbl + " set search = to_tsvector($1) where id =$2";
-      plv8.execute(updateSql, searchVals.join(" "), id);
-    }
-    return true;
-  }else{
-    return false;
-  }
-
-$$ language plv8;
-
-CREATE FUNCTION update_search(p_tablename text, id bigint) RETURNS boolean
+CREATE FUNCTION update_search() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE
 
+v_row           record;
+v_search_vals   text = '';
+
 BEGIN
 
-    -- See if there's a json function to return all field names from a jsonb column
-    -- make this a trigger on the created table instead of a standalone funtion
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+        FOR v_row IN SELECT key, value FROM jsonb_each_text(NEW.body) LOOP
+            IF v_row.key <> 'id' THEN
+                v_search_vals := v_search_vals || ' ' || v_row.value;
+            END IF;
+        END LOOP;
+
+        NEW.search := to_tsvector(v_search_vals);
+
+    END IF;
+
+    RETURN NEW;
 END
 $$;
-*/
+
